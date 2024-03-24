@@ -1,0 +1,45 @@
+[
+  {
+    "username": "adam",
+    "name": "adam",
+    "role": "system-admin",
+    "permissions": {
+      "users": [
+        "view",
+        "update"
+      ]
+    }
+  },
+  {
+    "username": "john",
+    "name": "john",
+    "role": "system-admin",
+    "permissions": {
+      "paint-colors": [
+        "view"
+      ]
+    }
+  },
+  {
+    "username": "jane",
+    "name": "jane",
+    "role": "system-admin",
+    "permissions": {
+      "paint-colors": [
+        "view",
+        "update"
+      ]
+    }
+  },
+  {
+    "username": "bob",
+    "name": "bob",
+    "role": "system-admin",
+    "permissions": {
+      "paint-colors": [
+        "view",
+        "update"
+      ]
+    }
+  }
+]

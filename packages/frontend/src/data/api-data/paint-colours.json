@@ -1,0 +1,22 @@
+[
+  {
+  "name": "blue",
+  "stockStatus": "available"
+  },
+  {
+    "name": "black",
+    "stockStatus": "running-low"
+  },
+  {
+    "name": "gray",
+    "stockStatus": "available"
+  },
+  {
+    "name": "white",
+    "stockStatus": "running-low"
+  },
+  {
+    "name": "purple",
+    "stockStatus": "out-of-stock"
+  }
+]
