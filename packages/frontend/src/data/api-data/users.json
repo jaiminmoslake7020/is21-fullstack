@@ -1,5 +1,6 @@
 [
   {
+    "id": "1",
     "username": "adam",
     "name": "adam",
     "role": "system-admin",
@@ -8,38 +9,58 @@
         "view",
         "update"
       ]
-    }
+    },
+    "userStatus": "enabled"
   },
   {
+    "id": "2",
     "username": "john",
     "name": "john",
-    "role": "system-admin",
+    "role": "inventory-manager",
     "permissions": {
       "paint-colors": [
         "view"
       ]
-    }
+    },
+    "userStatus": "enabled"
   },
   {
+    "id": "3",
     "username": "jane",
     "name": "jane",
-    "role": "system-admin",
+    "role": "inventory-manager",
     "permissions": {
       "paint-colors": [
         "view",
         "update"
       ]
-    }
+    },
+    "userStatus": "enabled"
   },
   {
+    "id": "4",
     "username": "bob",
     "name": "bob",
-    "role": "system-admin",
+    "role": "painter",
     "permissions": {
       "paint-colors": [
         "view",
         "update"
       ]
-    }
+    },
+    "userStatus": "enabled"
+  },
+  {
+    "id": "5",
+    "username": "karl",
+    "name": "karl",
+    "role": "painter",
+    "permissions": {
+      "paint-colors": [
+        "view",
+        "update"
+      ]
+    },
+    "userStatus": "disabled"
   }
 ]

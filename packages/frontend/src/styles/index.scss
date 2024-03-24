@@ -2,6 +2,7 @@
 @import "app/components/base/tailwind";
 @import "app/components/base/btn";
 @import "app/components/base/loading-bar";
+@import "app/pages/users/list";
 
 .app-wrapper{
   @apply relative;

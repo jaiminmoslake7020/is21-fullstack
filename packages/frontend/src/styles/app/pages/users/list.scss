@@ -1,0 +1,20 @@
+.user-list-page{
+
+  .permissions{
+    @apply flex flex-wrap md:flex-nowrap gap-3 overflow-x-auto py-4;
+    .action-list{
+      @apply flex flex-wrap md:flex-nowrap gap-3;
+      .resource-action{
+        @apply rounded-full px-3 py-1 bg-gray-100 capitalize flex gap-1;
+        .resource-span{
+          @apply capitalize;
+        }
+        .action-span{
+          @apply lowercase;
+        }
+      }
+    }
+  }
+
+
+}

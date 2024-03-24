@@ -24,6 +24,7 @@
     "@mui/types": "^7.2.4",
     "react-router-dom": "^6.2.1",
     "@mui/x-date-pickers": "^6.9.0",
+    "@mui/x-data-grid": "^6.9.0",
     "dayjs": "^1.10.7"
   },
   "devDependencies": {

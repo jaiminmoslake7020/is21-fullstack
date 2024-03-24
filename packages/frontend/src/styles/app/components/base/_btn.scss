@@ -1,22 +1,17 @@
 .btn{
-  @apply py-2 px-4 mx-0 text-xs;
-  @apply md:px-4;
-  @apply lg:py-3 lg:px-12 lg:mx-1 lg:text-sm;
-  @apply xl:mx-1 xl:text-base;
-  @apply 2xl:mx-3;
-
-  @apply capitalize rounded font-semibold w-fit;
+  @apply py-2 px-6 text-sm;
+  @apply capitalize w-fit rounded-full;
 
   &.btn-sm{
-    @apply py-2 px-9 mx-2 capitalize rounded-full font-semibold text-sm;
+    @apply py-2 px-9 text-sm;
   }
 
   &.btn-xs{
-    @apply py-1 px-6 mx-1 capitalize rounded-full font-semibold text-xs;
+    @apply py-1 px-6 capitalize text-xs;
   }
 
   &.btn-link{
-    @apply px-0 capitalize font-semibold text-blue-400 hover:text-blue-500 m-0;
+    @apply px-0  text-blue-400 hover:text-blue-500 m-0;
   }
 
   &.btn-disabled{
@@ -26,7 +21,6 @@
   &[disabled]{
     @apply pointer-events-none cursor-not-allowed opacity-40;
   }
-
 
   &.btn-inverse{
     @apply bg-transparent border rounded shadow-none px-3 py-2 text-base;
@@ -44,26 +38,13 @@
     }
 
     &.btn-sm{
-      @apply py-2 px-2 mx-2 capitalize font-semibold text-sm;
+      @apply py-2 px-2  text-sm;
     }
 
     &.btn-xs{
-      @apply py-2 px-2 mx-1 capitalize font-semibold text-[0.8rem] leading-4;
+      @apply py-2 px-2  text-[0.8rem] leading-4;
     }
 
-  }
-
-
-  &.btn-round{
-    @apply px-4 py-3 ;
-
-    &.btn-sm{
-      @apply py-2 px-2 mx-2 capitalize rounded-full font-semibold text-sm;
-    }
-
-    &.btn-xs{
-      @apply py-2 px-2 mx-1 capitalize rounded-full font-semibold text-xs;
-    }
   }
 
   &.btn-primary {
@@ -123,8 +104,18 @@
   &.all-apart{
     @apply items-center justify-center lg:justify-between lg:items-center;
   }
+
+}
+
+.status-btns{
+  .btn:nth-of-type(1){
+    @apply rounded-r-none;
+  }
+  .btn:nth-of-type(2){
+    @apply rounded-l-none;
+  }
 }
 
 .btn-icon{
-  @apply text-base mr-3 #{!important};
+  @apply flex gap-3 #{!important};
 }

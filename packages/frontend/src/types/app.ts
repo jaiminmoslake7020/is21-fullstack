@@ -9,9 +9,15 @@ export type Resources = 'paint-colours' | 'users';
 
 export type Actions = 'view' | 'update';
 
+export type ResourceActionsMap = Record<Resources, Actions[]>;
+
+export type UserStatus = 'enabled' | 'disabled';
+
 export type User = {
+  id: string,
   username: string,
   name: string,
   role: 'painter' | 'inventory-manager' | 'system-admin',
-  permissions: Record<Resources, Actions[]>
+  permissions: ResourceActionsMap,
+  userStatus: UserStatus
 };
