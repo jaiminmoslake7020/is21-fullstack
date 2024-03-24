@@ -1,0 +1,15 @@
+@import "app/globals/variables";
+@import "app/components/base/tailwind";
+@import "app/components/base/btn";
+@import "app/components/base/loading-bar";
+
+.app-wrapper{
+  @apply relative;
+  @apply  mx-auto my-10 w-[90%] max-w-[90%];
+  @apply  md:mx-[5%] md:w-[90%] md:max-w-[90%] ;
+  @apply  lg:mx-[10%] lg:w-[80%] lg:max-w-[80%];
+}
+
+.header{
+  @apply text-xl font-bold text-blue-400;
+}
