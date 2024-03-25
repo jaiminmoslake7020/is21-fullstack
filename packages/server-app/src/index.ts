@@ -16,7 +16,7 @@ AppDataSource.initialize().then(async () => {
     // setup express app here
     // ...
 
-    const port = 3000;
+    const port = 80;
     // start express server
     app.listen(port, () => {
         paintColoursRoutes(app);
