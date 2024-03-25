@@ -1,8 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {UserSlice} from '../../types/reducers';
 
+const userLocal = localStorage.getItem('user');
 const initialState = {
-  user: null,
+  user: userLocal ? JSON.parse(userLocal) : null,
 } as UserSlice;
 
 export const userSlice = createSlice({
@@ -11,9 +12,11 @@ export const userSlice = createSlice({
   reducers: {
     login: (state:UserSlice, action) => {
       // eslint-disable-next-line no-param-reassign
-      state.user = action.payload
+      state.user = action.payload;
+      localStorage.setItem('user', JSON.stringify(action.payload));
     },
     logout: (state:UserSlice) => {
+      localStorage.removeItem('user');
       // eslint-disable-next-line no-param-reassign
       state.user = null;
     },

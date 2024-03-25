@@ -11,7 +11,7 @@ function Header() {
   return (
     user
       ? (
-        <div className="header-wrapper" >
+        <header className="header-wrapper" >
           <div className="flex gap-4 itesm-center">
             <div className="flex gap-2 items-center font-bold">
               <Icon icon="user" />
@@ -28,7 +28,7 @@ function Header() {
               <span>Logout</span>
             </button>
           </div>
-        </div>
+        </header>
       ) : null
   );
 }

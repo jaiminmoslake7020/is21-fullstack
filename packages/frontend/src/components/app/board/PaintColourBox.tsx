@@ -4,6 +4,9 @@ import {useState} from 'react';
 import { ItemTypes } from './ItemTypes';
 import {Paint, ResourceActionsMap} from '../../../types/app';
 import Order from './Order';
+import {useAppDispatch} from '../../../redux/store';
+import {addNotification} from '../../../redux/reducers/feedback';
+import {addNewErrorMsgWithTitle} from '../../../utils/helpers/feedback';
 
 export type BoxProps = {
   name: string,
@@ -25,6 +28,7 @@ function PaintColourBox(props:BoxProps) {
   } = props;
   const { 'paint-colours': PaintColours } = permissions;
   const canUpdate = PaintColours ? PaintColours.includes('update') : false;
+  const dispatch = useAppDispatch();
   const [{ opacity }, drag] = useDrag(
     () => ({
       type: ItemTypes.BOX,
@@ -32,7 +36,10 @@ function PaintColourBox(props:BoxProps) {
       end(item, monitor) {
         const dropResult = monitor.getDropResult() as DropResult
         if (item && dropResult) {
-          const isDropAllowed = currentSwimLane !== dropResult.name;
+          const isDropAllowed = currentSwimLane !== dropResult.name && canUpdate;
+          if (!canUpdate) {
+            dispatch(addNotification(addNewErrorMsgWithTitle('Permission', 'User do not have permission to update.')));
+          }
           if (isDropAllowed) {
             changeSwimLane(dropResult.name);
           }
@@ -42,7 +49,7 @@ function PaintColourBox(props:BoxProps) {
         opacity: monitor.isDragging() ? 0.4 : 1,
       }),
     }),
-    [name, currentSwimLane],
+    [name, currentSwimLane, canUpdate],
   )
   const [update, setUpdate] = useState<null | 'order' | 'pickup'>(null);
 

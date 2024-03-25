@@ -1,4 +1,6 @@
-import {createBrowserRouter, RouteObject, RouterProvider,} from 'react-router-dom';
+import {
+  createBrowserRouter, RouteObject, RouterProvider, Navigate
+} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import Home from '../views/Home';
 import Board from '../views/paint-colours/Board';
@@ -24,6 +26,23 @@ export default function Routes() {
           path: '/',
           element: (
             <Home />
+          ),
+        },
+        {
+          path: '/:anything',
+          element: (
+            <Navigate to="/" />
+          ),
+        },
+        {
+          path: '/:anything/:anything',
+          element: (
+            <Navigate to="/" />
+          ),
+        }, {
+          path: '/:anything/:anything/:anything',
+          element: (
+            <Navigate to="/" />
           ),
         }]);
       } else {

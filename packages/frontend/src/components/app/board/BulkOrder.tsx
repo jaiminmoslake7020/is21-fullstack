@@ -1,12 +1,15 @@
 import React from 'react';
 import {Dialog, DialogTitle} from '@mui/material';
-import PaintColourForm from './PaintColourForm';
-import {Paint} from '../../../types/app';
+import BulkPaintColourOne from './BulkPaintColourOne';
+import {Paint, PaintColour, StockType} from '../../../types/app';
 import Icon from '../../base/Icon'
 
-function Order(props: {
+function BulkOrder(props: {
   onSubmit: Function,
-  defaultValues: Paint,
+  defaultValues: {
+    colourList: PaintColour[],
+    stockStatus: StockType
+  },
   updateType: 'order' | 'pickup',
   onClose: Function
 }) {
@@ -18,6 +21,8 @@ function Order(props: {
       <DialogTitle >
         <div className="w-full flex justify-between">
           <span className="capitalize">
+            Bulk
+            {' '}
             {updateType}
           </span>
           <button type="button"
@@ -29,7 +34,7 @@ function Order(props: {
         </div>
       </DialogTitle>
       <div className="p-4 min-w-[70vw] sm:min-w-[500px]" >
-        <PaintColourForm
+        <BulkPaintColourOne
           onSubmit={onSubmit}
           defaultValues={defaultValues}
           updateType={updateType}
@@ -39,6 +44,6 @@ function Order(props: {
   );
 }
 
-Order.defaultProps = {};
+BulkOrder.defaultProps = {};
 
-export default Order;
+export default BulkOrder;

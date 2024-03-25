@@ -6,16 +6,16 @@ import Header from './components/app/Header';
 
 function App() {
   return (
-    <div className="App relative" >
+    <section className="App relative" >
       <Loading />
       <Header />
-      <div className="app-wrapper" >
+      <main className="app-wrapper" >
         <FeedbackSystem />
         <div className="routes" >
           <Routes />
         </div>
-      </div>
-    </div>
+      </main>
+    </section>
   );
 }
 
