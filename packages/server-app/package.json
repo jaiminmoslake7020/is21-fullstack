@@ -43,13 +43,6 @@
       "schema:sync": "ts-node --project ./tsconfig.json ./../../node_modules/typeorm/cli.js schema:sync --d ./../../packages/server-app/src/data-source-cli.ts",
       "seed:config": "ts-node --project ./tsconfig.json ./../../node_modules/typeorm-seeding/dist/cli.js config",
       "seed:run": "ts-node --project ./tsconfig.json ./../../node_modules/typeorm-seeding/dist/cli.js seed",
-      "db:setup": "npm run schema:drop && npm run schema:sync && npm run seed:config && npm run seed:run",
-
-      "docker:schema:init": "ts-node --project ./tsconfig.json ./node_modules/typeorm/cli.js schema:init",
-      "docker:schema:drop": "ts-node --project ./tsconfig.json ./node_modules/typeorm/cli.js schema:drop --d ./src/data-source-cli.ts",
-      "docker:schema:sync": "ts-node --project ./tsconfig.json ./node_modules/typeorm/cli.js schema:sync --d ./src/data-source-cli.ts",
-      "docker:seed:config": "ts-node --project ./tsconfig.json ./node_modules/typeorm-seeding/dist/cli.js config",
-      "docker:seed:run": "ts-node --project ./tsconfig.json ./node_modules/typeorm-seeding/dist/cli.js seed",
-      "docker:db:setup": "npm run docker:schema:drop && npm run docker:schema:sync && npm run docker:seed:config && npm run docker:seed:run"
-   }
+      "db:setup": "npm run schema:drop && npm run schema:sync && npm run seed:config && npm run seed:run"
+  }
 }

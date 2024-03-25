@@ -7,8 +7,7 @@
   "scripts": {
     "setup:db": "cd packages/server-app/ && npm run db:setup",
     "start:server": "cd packages/server-app/ && npm run start",
-    "run:web": "cd packages/frontend && npm run start",
-    "docker:run": "docker-compose up"
+    "run:web": "cd packages/frontend && npm run start"
   },
   "author": {
     "name": "Jaimin Pandya",
