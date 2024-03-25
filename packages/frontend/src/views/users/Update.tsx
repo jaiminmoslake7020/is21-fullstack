@@ -1,8 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import users from '../../data/api-data/users.json';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 import UserUpdateForm from '../../components/app/UserUpdateForm';
 import {User} from '../../types/app';
+import {useAppDispatch} from '../../redux/store';
+import {getUser, updateUser} from '../../services/api';
+import {addNewErrorMsgWithTitle, addNewSuccessMsgWithTitle} from '../../utils/helpers/feedback';
+import {addNotification} from '../../redux/reducers/feedback';
 
 function Update() {
   const {
@@ -10,13 +13,40 @@ function Update() {
   } = useParams();
   const [user, setUser] = useState<User | null>(null);
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     const mount = () => {
-      const usersFiltered = users.filter((u:any) => {
-        return u.id === id;
-      });
-      if (usersFiltered && usersFiltered.length === 1) {
-        setUser(usersFiltered[0] as any as User);
+      if (id) {
+        getUser(id).then((responseMain) => {
+          const { isSuccess, error, response } = responseMain;
+          if (isSuccess && response) {
+            setUser(response);
+          } else {
+            const eTwo = addNewErrorMsgWithTitle();
+            dispatch(addNotification(eTwo));
+          }
+        });
+      }
+    };
+    return mount();
+  }, [id]);
+
+  const updateUserFn = useCallback((newData:User) => {
+    const mount = () => {
+      if (id) {
+        updateUser(newData.id, newData).then((responseMain) => {
+          const { isSuccess, error, response } = responseMain;
+          if (isSuccess && response) {
+            setUser(response);
+            dispatch(addNotification(addNewSuccessMsgWithTitle('Success', 'User updated successfully.')));
+            navigate('/users');
+          } else {
+            const eTwo = addNewErrorMsgWithTitle();
+            dispatch(addNotification(eTwo));
+          }
+        });
       }
     };
     return mount();
@@ -30,7 +60,7 @@ function Update() {
             <UserUpdateForm
               defaultValues={user as User}
               onSubmit={(newData:User) => {
-                console.log('updated user', newData);
+                updateUserFn(newData);
               }} />
           ) : null
       }

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import {useNavigate} from 'react-router-dom';
 import {Tooltip} from '@mui/material';
-import users from '../../data/api-data/users.json';
 import {
   ResourceActionsMap, Resources, User, Actions, UserStatus
 } from '../../types/app';
 import Icon from '../../components/base/Icon';
+import {getUsers, updateUser} from '../../services/api';
+import {addNewErrorMsgWithTitle, addNewSuccessMsgWithTitle} from '../../utils/helpers/feedback';
+import {addNotification} from '../../redux/reducers/feedback';
+import Loading from '../../components/base/Loading';
+import {useAppDispatch} from '../../redux/store';
 
 function ResourcesAction(props: {
   resource: Resources, action: Actions
@@ -81,15 +85,51 @@ const columns: GridColDef<User>[] = [
     width: 300,
     disableColumnMenu: true,
     renderCell: (params) => {
-      const status = params.value as UserStatus;
+      const {id} = params.row;
+      const dispatch = useAppDispatch();
+      const [status, setStatus] = useState<UserStatus>(params.value as UserStatus);
+
+      const updateUserFn = useCallback((newStatus:'enabled' | 'disabled') => {
+        updateUser(id, {
+          ...params.row, userStatus: newStatus
+        }).then((responseMain) => {
+          const { isSuccess, error, response } = responseMain;
+          if (isSuccess && response) {
+            dispatch(addNotification(addNewSuccessMsgWithTitle('Success', 'User updated successfully.')));
+            setStatus(newStatus);
+          } else {
+            const eTwo = addNewErrorMsgWithTitle();
+            dispatch(addNotification(eTwo));
+          }
+        });
+      }, [id]);
+
       return (
         <Tooltip title={`This user is ${status}.`} >
           <div className="status-btns">
             {
-              status === 'enabled' ? <button type="button" disabled className="btn btn-blue btn-xs " >Enabled</button> : <button type="button" className="btn btn-white btn-xs" >Enable</button>
+              status === 'enabled' ? <button type="button" disabled className="btn btn-blue btn-xs " >Enabled</button> : (
+                <button type="button"
+                  className="btn btn-white btn-xs"
+                  onClick={() => {
+                    updateUserFn('enabled');
+                  }}
+                >
+Enable
+                </button>
+              )
             }
             {
-              status === 'enabled' ? <button type="button" className="btn btn-white btn-xs" >Disable</button> : <button type="button" disabled className="btn btn-red btn-xs " >Disabled</button>
+              status === 'enabled' ? (
+                <button type="button"
+                  className="btn btn-white btn-xs"
+                  onClick={() => {
+                    updateUserFn('disabled');
+                  }}
+                >
+Disable
+                </button>
+              ) : <button type="button" disabled className="btn btn-red btn-xs " >Disabled</button>
             }
           </div>
         </Tooltip>
@@ -123,21 +163,44 @@ const columns: GridColDef<User>[] = [
 ];
 
 function List() {
+  const dispatch = useAppDispatch();
+  const [users, setUsers] = useState<User[] | null>(null);
+
+  useEffect(() => {
+    const mount = () => {
+      getUsers().then((responseMain) => {
+        const { isSuccess, error, response } = responseMain;
+        if (isSuccess && response) {
+          setUsers(response);
+        } else {
+          const eTwo = addNewErrorMsgWithTitle();
+          dispatch(addNotification(eTwo));
+        }
+      });
+    };
+    return mount();
+  }, []);
+
   return (
     <div className="user-list-page" >
-      <DataGrid
-        rows={users as any as User[]}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 10,
-            },
-          },
-        }}
-        pageSizeOptions={[10]}
-        disableRowSelectionOnClick
-      />
+      {
+        users
+          ? (
+            <DataGrid
+              rows={users as any as User[]}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                  },
+                },
+              }}
+              pageSizeOptions={[10]}
+              disableRowSelectionOnClick
+            />
+          ) : <Loading />
+      }
     </div>
   );
 }

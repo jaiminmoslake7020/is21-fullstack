@@ -11,7 +11,7 @@ export const listPaintColours = async(request: Request, response: Response)=> {
         response.statusCode = 500;
         return response.json({
             status: 500,
-            message: "Failed to list products."
+            message: "Failed to list paint colours."
         });
     }
 }

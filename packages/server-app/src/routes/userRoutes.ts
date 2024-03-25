@@ -1,9 +1,44 @@
 import { Express } from "express";
 import validateResource from "../middleware/validateResource";
-import { listUsersHandler, updateUserHandler } from '../controller/UserController';
+import {getUsersHandler, listUsersHandler, updateUserHandler} from '../controller/UserController';
 import { updateUserSchema } from '../schema/user.schema';
 
 function userRoutes(app: Express) {
+
+    /**
+     * @openapi
+     * '/api/users/:id':
+     *   get:
+     *     tags:
+     *     - Users
+     *     summary: Get user
+     *     parameters:
+     *     - name: id
+     *       in: path
+     *     responses:
+     *       '200':
+     *         description: Success
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schema/Users'
+     *       '404':
+     *         description: Users not found
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schema/Error'
+     *       '500':
+     *         description: Internal Error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schema/Error'
+     */
+    app.get(
+        "/api/users/:id",
+        getUsersHandler
+    );
 
     /**
      * @openapi
@@ -42,16 +77,18 @@ function userRoutes(app: Express) {
 
     /**
      * @openapi
-     * '/api/users':
-     *   post:
+     * '/api/users/:id':
+     *   put:
      *     tags:
      *       - Users
-     *     summary: Create new Users
+     *     summary: Update User
      *     consumes:
      *       - application/json
      *     produces:
      *       - application/json
      *     parameters:
+     *       - in: path
+     *         name: id
      *       - in: body
      *         name: body
      *         description: Users Info
@@ -79,7 +116,7 @@ function userRoutes(app: Express) {
      *               $ref: '#/components/schema/Error'
      */
     app.put(
-        "/api/users",
+        "/api/users/:id",
         validateResource(updateUserSchema),
         updateUserHandler
     );

@@ -56,10 +56,11 @@ const payload = {
       users: array(string({
         required_error: "Permissions 'users' is required",
       })),
+    }).or(object({
       "paint-colours": array(string({
         required_error: "Permissions 'paint-colours' is required",
-      })),
-    }),
+      }))
+    })),
   }),
 };
 

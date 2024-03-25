@@ -3,6 +3,14 @@ import {addNewErrorMsgWithTitle} from '../utils/helpers/feedback';
 import {FailedResponseType, SuccessResponseType} from '../types/base';
 import {PaintColour, User} from '../types/app';
 
+let apiUrl = 'http://192.168.1.100:3000';
+if (window.location.hostname === 'localhost') {
+  apiUrl = 'http://localhost:3000'
+}
+if (window.location.hostname === '') {
+  apiUrl = 'http://localhost:3000'
+}
+
 export const responseJson = (r:any) => {
   console.log('r', r.status);
   if (r.status !== 200) {
@@ -13,7 +21,7 @@ export const responseJson = (r:any) => {
 
 export const getUsers = () : Promise<SuccessResponseType | FailedResponseType> => {
   return new Promise((resolve) => {
-    fetch('http://localhost:3000/api/users')
+    fetch(`${apiUrl}/api/users`)
       .then(r => responseJson(r))
       .then((response) => {
         if (response && Array.isArray(response)) {
@@ -31,9 +39,29 @@ export const getUsers = () : Promise<SuccessResponseType | FailedResponseType> =
   })
 }
 
-export const getPaintColors = () : Promise<SuccessResponseType | FailedResponseType> => {
+export const getUser = (id:string) : Promise<SuccessResponseType | FailedResponseType> => {
   return new Promise((resolve) => {
-    fetch('http://localhost:3000/api/paint-colours')
+    fetch(`${apiUrl}/api/users/${id}`)
+      .then(r => responseJson(r))
+      .then((response) => {
+        if (response) {
+          resolve({ ...coreSuccessResponse, response });
+        } else {
+          let e = addNewErrorMsgWithTitle('API Error', 'Response is empty. Please try again later.');
+          e = { ...e, caughtError: response };
+          resolve({ ...coreFailedResponse, error: e });
+        }
+      }).catch((response:any) => {
+        let e = addNewErrorMsgWithTitle('API Error', 'Response is empty. Please try again later.');
+        e = { ...e, caughtError: response };
+        resolve({ ...coreFailedResponse, error: e });
+      });
+  })
+}
+
+export const getPaintColours = () : Promise<SuccessResponseType | FailedResponseType> => {
+  return new Promise((resolve) => {
+    fetch(`${apiUrl}/api/paint-colours`)
       .then(r => responseJson(r))
       .then((response) => {
         if (response && Array.isArray(response)) {
@@ -51,9 +79,9 @@ export const getPaintColors = () : Promise<SuccessResponseType | FailedResponseT
   })
 }
 
-export const getPaintColorByName = (color:PaintColour) : Promise<SuccessResponseType | FailedResponseType> => {
+export const getPaintColourByName = (color:PaintColour) : Promise<SuccessResponseType | FailedResponseType> => {
   return new Promise((resolve) => {
-    fetch(`http://localhost:3000/api/paint-colours/${color}`)
+    fetch(`${apiUrl}/api/paint-colours/${color}`)
       .then(r => responseJson(r))
       .then((response) => {
         if (response && response.productId) {
@@ -71,36 +99,9 @@ export const getPaintColorByName = (color:PaintColour) : Promise<SuccessResponse
   })
 }
 
-export const createUser = (body:User) : Promise<SuccessResponseType | FailedResponseType> => {
-  return new Promise((resolve) => {
-    fetch('http://localhost:3000/api/products', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    })
-      .then(r => responseJson(r))
-      .then((response) => {
-        if (response) {
-          resolve({ ...coreSuccessResponse, response });
-        } else {
-          let e = addNewErrorMsgWithTitle('API Error', 'Response is empty. Please try again later.');
-          e = { ...e, caughtError: response };
-          resolve({ ...coreFailedResponse, error: e });
-        }
-      }).catch((response:any) => {
-        let e = addNewErrorMsgWithTitle('API Error', 'Response is empty. Please try again later.');
-        e = { ...e, caughtError: response };
-        resolve({ ...coreFailedResponse, error: e });
-      });
-  })
-}
-
 export const updateUser = (id:string, body:User) : Promise<SuccessResponseType | FailedResponseType> => {
   return new Promise((resolve) => {
-    fetch(`http://localhost:3000/api/users/${id}`, {
+    fetch(`${apiUrl}/api/users/${id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
       headers: {
@@ -125,10 +126,37 @@ export const updateUser = (id:string, body:User) : Promise<SuccessResponseType |
   })
 }
 
-export const upsertPaintColours = (body:any) : Promise<SuccessResponseType | FailedResponseType> => {
+export const updatePaintColours = (body:any) : Promise<SuccessResponseType | FailedResponseType> => {
   return new Promise((resolve) => {
-    fetch('http://localhost:3000/api/paint-colours', {
+    fetch(`${apiUrl}/api/paint-colours`, {
       method: 'PUT',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    })
+      .then(r => responseJson(r))
+      .then((response) => {
+        if (response) {
+          resolve({ ...coreSuccessResponse, response });
+        } else {
+          let e = addNewErrorMsgWithTitle('API Error', 'Response is empty. Please try again later.');
+          e = { ...e, caughtError: response };
+          resolve({ ...coreFailedResponse, error: e });
+        }
+      }).catch((response:any) => {
+        let e = addNewErrorMsgWithTitle('API Error', 'Response is empty. Please try again later.');
+        e = { ...e, caughtError: response };
+        resolve({ ...coreFailedResponse, error: e });
+      });
+  })
+}
+
+export const bulkUpdatePaintColours = (body:any) : Promise<SuccessResponseType | FailedResponseType> => {
+  return new Promise((resolve) => {
+    fetch(`${apiUrl}/api/paint-colours`, {
+      method: 'POST',
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',

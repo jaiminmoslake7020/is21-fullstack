@@ -38,14 +38,14 @@ export const updatePaintColour = async (productInput:UpdatePaintColourInput):Pro
 
 export const bulkUpdatePaintColour = async (productInput:UpdateBulkPaintColourInput):Promise<PaintColour[]|Error> => {
     const { name, stockStatus } = productInput.body;
-    name.forEach( async (n:string) => {
-        await updatePaintColour({
+    await Promise.all(name.map( async (n:string) => {
+        return await updatePaintColour({
             body: {
                 name: n,
                 stockStatus
             }
         });
-    });
+    }));
     return getPaintColours();
 }
 

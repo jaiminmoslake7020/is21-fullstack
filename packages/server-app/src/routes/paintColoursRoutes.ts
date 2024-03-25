@@ -16,7 +16,7 @@ function paintColoursRoutes(app: Express) {
 
     /**
      * @openapi
-     * '/api/paint-colours/':
+     * '/api/paint-colours':
      *  get:
      *     tags:
      *     - PaintColours
@@ -40,7 +40,36 @@ function paintColoursRoutes(app: Express) {
 
     /**
      * @openapi
-     * '/api/paint-colours/':
+     * '/api/paint-colours':
+     *  post:
+     *     tags:
+     *     - PaintColoursBulk
+     *     summary: Update paint colour in bulk
+     *     consumes:
+     *     - "application/json"
+     *     produces:
+     *     - "application/json"
+     *     responses:
+     *      200:
+     *         description: Success
+     *         content:
+     *          application/json:
+     *           schema:
+     *             type: "array"
+     *             items:
+     *              $ref: '#/components/schema/PaintColours'
+     *       404:
+     *         description: Product not found
+     */
+    app.post(
+        "/api/paint-colours",
+        validateResource(updateBulkPaintColourSchema),
+        bulkUpdatePaintColourHandler
+    );
+
+    /**
+     * @openapi
+     * '/api/paint-colours':
      *  put:
      *     tags:
      *     - PaintColours
@@ -63,35 +92,6 @@ function paintColoursRoutes(app: Express) {
         "/api/paint-colours",
         validateResource(updatePaintColourSchema),
         updatePaintColourHandler
-    );
-
-    /**
-     * @openapi
-     * '/api/paint-colours/bulk':
-     *  put:
-     *     tags:
-     *     - PaintColoursBulk
-     *     summary: Update paint colour in bulk
-     *     consumes:
-     *     - "application/json"
-     *     produces:
-     *     - "application/json"
-     *     responses:
-     *      200:
-     *         description: Success
-     *         content:
-     *          application/json:
-     *           schema:
-     *             type: "array"
-     *             items:
-     *              $ref: '#/components/schema/PaintColours'
-     *       404:
-     *         description: Product not found
-     */
-    app.put(
-        "/api/paint-colours/bulk",
-        validateResource(updateBulkPaintColourSchema),
-        bulkUpdatePaintColourHandler
     );
 
 }

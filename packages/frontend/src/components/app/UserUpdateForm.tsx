@@ -38,7 +38,7 @@ function UserUpdateForm(props: { defaultValues : User, onSubmit : Function }) {
       }
       onSubmit({...data, permissions: permissionsNew});
     }
-  }, [addPermissions]);
+  }, [addPermissions, userView, userUpdate, paintColorView, paintColorUpdate, onSubmit]);
 
   return (
     <form className="user-update-form" onSubmit={handleSubmit(handleFormSubmit)}>

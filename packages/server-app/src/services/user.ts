@@ -8,15 +8,13 @@ const getUserRepo = () => {
 }
 
 export const getUsers = async ():Promise<User[]> => {
-    const users =  await getUserRepo().find();
-    return users.map(user => ({...user, permissions: JSON.parse(user.permissions)}));
+    return  await getUserRepo().find();
 }
 
 export const getUserById = async (id: string):Promise<User> => {
-    const user = await getUserRepo().findOneBy({
+    return await getUserRepo().findOneBy({
         id
     });
-    return {...user, permissions: JSON.parse(user.permissions)};
 }
 
 export const updateUser = async (userInput:UpdateUserInput):Promise<User|Error> => {

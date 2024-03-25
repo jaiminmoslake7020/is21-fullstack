@@ -2,16 +2,17 @@ import React, {useCallback, useState, useEffect} from 'react';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import SwimLane from '../../components/app/board/SwimLane';
-import {useAppSelector} from '../../redux/store';
+import {useAppDispatch, useAppSelector} from '../../redux/store';
 import Feedback from '../../components/base/Feedback';
-import {addNewInfoMsgWithTitle} from '../../utils/helpers/feedback';
+import {addNewErrorMsgWithTitle, addNewInfoMsgWithTitle} from '../../utils/helpers/feedback';
 import {
-  Paint, PaintColour, ResourceActionsMap, StockType
+  Paint, PaintColour, ResourceActionsMap, StockType, User
 } from '../../types/app';
-import paintColoursData from '../../data/api-data/paint-colours.json';
 import Loading from '../../components/base/LoadingBase';
 import BulkOrder from '../../components/app/board/BulkOrder';
 import {colourList} from '../../data/colour-list';
+import {bulkUpdatePaintColours, getPaintColours, updatePaintColours} from '../../services/api';
+import {addNotification} from '../../redux/reducers/feedback';
 
 function Board() {
   const { user } = useAppSelector((store) => store.user);
@@ -22,21 +23,48 @@ function Board() {
   const canView = PaintColours ? PaintColours.includes('view') : false;
   const canUpdate = PaintColours ? PaintColours.includes('update') : false;
 
-  const [originalData, setOriginalData] = useState<Paint[]>(paintColoursData as any as Paint[]);
+  const [originalData, setOriginalData] = useState<Paint[]>([]);
   const [formattedData, setFormattedData] = useState<Record<StockType, PaintColour[]> | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [update, setUpdate] = useState<null | 'order' | 'pickup'>(null);
 
+  const dispatch = useAppDispatch();
+  const [users, setUsers] = useState<User[] | null>(null);
+
+  useEffect(() => {
+    const mount = () => {
+      getPaintColours().then((responseMain) => {
+        const { isSuccess, error, response } = responseMain;
+        if (isSuccess && response) {
+          setOriginalData(response);
+        } else {
+          const eTwo = addNewErrorMsgWithTitle();
+          dispatch(addNotification(eTwo));
+        }
+      });
+    };
+    return mount();
+  }, []);
+
   const changeSwimLane = useCallback((data:Paint) => {
     setLoading(true);
-    const newOriginalData = originalData.map((p:Paint) => {
-      let newStockStatus = p.stockStatus
-      if (p.name === data.name) {
-        newStockStatus = data.stockStatus
+    updatePaintColours(data).then((responseMain) => {
+      const { isSuccess, error, response } = responseMain;
+      if (isSuccess && response) {
+        const newOriginalData = originalData.map((p:Paint) => {
+          let newStockStatus = p.stockStatus
+          if (p.name === response.name) {
+            newStockStatus = response.stockStatus
+          }
+          return {...p, stockStatus: newStockStatus};
+        });
+        setOriginalData(newOriginalData);
+      } else {
+        setLoading(false);
+        const eTwo = addNewErrorMsgWithTitle();
+        dispatch(addNotification(eTwo));
       }
-      return {...p, stockStatus: newStockStatus};
     });
-    setOriginalData(newOriginalData);
   }, [originalData]);
 
   const updateSwimLanes = useCallback((data:{
@@ -44,15 +72,21 @@ function Board() {
     stockStatus: StockType
   }) => {
     setLoading(true);
-    const newOriginalData = originalData.map((p:Paint) => {
-      let newStockStatus = p.stockStatus
-      if (data.colourList.includes(p.name)) {
-        newStockStatus = data.stockStatus
+    bulkUpdatePaintColours({
+      name: data.colourList,
+      stockStatus: data.stockStatus
+    }).then((responseMain) => {
+      const { isSuccess, error, response } = responseMain;
+      if (isSuccess && response) {
+        setOriginalData(response);
+        setUpdate(null);
+      } else {
+        const eTwo = addNewErrorMsgWithTitle();
+        dispatch(addNotification(eTwo));
+        setUpdate(null);
+        setLoading(false);
       }
-      return {...p, stockStatus: newStockStatus};
     });
-    setOriginalData(newOriginalData);
-    setUpdate(null);
   }, [originalData]);
 
   useEffect(() => {

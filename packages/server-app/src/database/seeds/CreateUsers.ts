@@ -15,7 +15,7 @@ export default class CreateUsers implements Seeder {
             user.username = x.username;
             user.name =  x.name;
             user.role = x.role as any;
-            user.permissions = JSON.stringify(x.permissions) as any;
+            user.permissions = x.permissions as any;
             user.userStatus = x.userStatus as any;
             await em.save(user);
             return user;
