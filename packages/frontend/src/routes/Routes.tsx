@@ -1,6 +1,7 @@
 import {createBrowserRouter, RouterProvider, } from 'react-router-dom';
 import Home from '../views/Home';
 import UserList from '../views/users/List';
+import UserUpdate from '../views/users/Update'
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,12 @@ const router = createBrowserRouter([
     path: '/users',
     element: (
       <UserList />
+    ),
+  },
+  {
+    path: '/users/:id/update',
+    element: (
+      <UserUpdate />
     ),
   }
 ]);

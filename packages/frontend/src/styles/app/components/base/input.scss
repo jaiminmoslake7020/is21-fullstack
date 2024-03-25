@@ -1,0 +1,84 @@
+/* Styling the select dropdown */
+select , input {
+  appearance: none; /* Removes default arrow */
+  -webkit-appearance: none; /* For older versions of Chrome and Safari */
+  -moz-appearance: none; /* For older versions of Firefox */
+  background-color: #f5f5f5; /* Background color */
+  border: 1px solid #ccc; /* Border */
+  padding: 8px 12px; /* Padding */
+  font-size: 16px; /* Font size */
+  width: 100%; /* Width */
+  cursor: pointer; /* Cursor */
+  border-radius: 4px; /* Border radius */
+}
+
+/* Styling the select dropdown when it's focused */
+select:focus {
+  outline: none; /* Removes default focus outline */
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1); /* Custom focus styling */
+}
+
+/* Styling the options within the select dropdown */
+select option {
+  background-color: #fff; /* Background color */
+  padding: 8px 12px; /* Padding */
+  font-size: 16px; /* Font size */
+}
+
+/* Styling the options within the select dropdown when hovered */
+select option:hover {
+  background-color: #f0f0f0; /* Hover background color */
+}
+
+
+/* Styling the select dropdown */
+.select-wrapper {
+  position: relative; /* Positioning context for pseudo-element */
+  width: 100%; /* Adjust width as needed */
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 8px 32px 8px 12px; /* Add padding for caret */
+  font-size: 16px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Styling the pseudo-element caret */
+.select-wrapper::after {
+  content: ''; /* Required for pseudo-element */
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Adjust right position of caret */
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent; /* Size and color of caret */
+  border-right: 6px solid transparent; /* Size and color of caret */
+  border-top: 6px solid #555; /* Size and color of caret */
+  transform: translateY(-50%); /* Centering vertically */
+  pointer-events: none; /* Prevents interaction */
+}
+
+/* Styling the select dropdown when it's focused */
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling the options within the select dropdown */
+select option {
+  background-color: #fff;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+/* Styling the options within the select dropdown when hovered */
+select option:hover {
+  background-color: #f0f0f0;
+}

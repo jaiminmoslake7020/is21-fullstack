@@ -117,5 +117,10 @@
 }
 
 .btn-icon{
-  @apply flex gap-3 #{!important};
+  @apply flex gap-2 items-center #{!important};
+  &.btn-xs{
+    .svg-inline--fa{
+      @apply h-[0.6rem];
+    }
+  }
 }

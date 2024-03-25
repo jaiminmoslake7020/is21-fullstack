@@ -18,3 +18,25 @@
 
 
 }
+
+
+.user-update-form{
+  @apply flex flex-col gap-3 w-full ;
+
+  .form-control{
+    @apply flex flex-wrap md:flex-nowrap w-full gap-1;
+
+    .input-holder{
+      @apply flex flex-col gap-2;
+    }
+
+    span{
+      @apply text-red-400 text-xs;
+    }
+
+  }
+
+  .form-control-checkbox{
+    @apply flex gap-4 w-full md:flex-row items-center;
+  }
+}

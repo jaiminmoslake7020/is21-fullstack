@@ -25,7 +25,8 @@
     "react-router-dom": "^6.2.1",
     "@mui/x-date-pickers": "^6.9.0",
     "@mui/x-data-grid": "^6.9.0",
-    "dayjs": "^1.10.7"
+    "dayjs": "^1.10.7",
+    "react-hook-form": "^7.51.1"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

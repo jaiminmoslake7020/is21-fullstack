@@ -1,9 +1,12 @@
 import React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import {useNavigate} from 'react-router-dom';
+import {Tooltip} from '@mui/material';
 import users from '../../data/api-data/users.json';
 import {
   ResourceActionsMap, Resources, User, Actions, UserStatus
 } from '../../types/app';
+import Icon from '../../components/base/Icon';
 
 function ResourcesAction(props: {
   resource: Resources, action: Actions
@@ -58,13 +61,14 @@ const columns: GridColDef<User>[] = [
     headerName: 'Permission',
     sortable: false,
     width: 300,
+    disableColumnMenu: true,
     renderCell: (params) => {
       const permissions = params.value as ResourceActionsMap;
       const resourcesArray = Object.keys(permissions) as Resources[];
       return (
         <div className="permissions">
           {
-            Object.keys(permissions).map((x:Resources | string) : JSX.Element => (<ResourcesActionList resource={x as Resources} actions={permissions[x as Resources]} />))
+            Object.keys(permissions).map((x:Resources | string, index) : JSX.Element => (<ResourcesActionList key={`${x}-${index}`} resource={x as Resources} actions={permissions[x as Resources]} />))
           }
         </div>
       )
@@ -75,17 +79,20 @@ const columns: GridColDef<User>[] = [
     headerName: 'Status',
     sortable: false,
     width: 300,
+    disableColumnMenu: true,
     renderCell: (params) => {
       const status = params.value as UserStatus;
       return (
-        <div className="status-btns">
-          {
-            status === 'enabled' ? <button type="button" disabled className="btn btn-blue btn-xs " >Enabled</button> : <button type="button" className="btn btn-white btn-xs" >Enable</button>
-          }
-          {
-            status === 'enabled' ? <button type="button" className="btn btn-white btn-xs" >Disable</button> : <button type="button" disabled className="btn btn-red btn-xs " >Disabled</button>
-          }
-        </div>
+        <Tooltip title={`This user is ${status}.`} >
+          <div className="status-btns">
+            {
+              status === 'enabled' ? <button type="button" disabled className="btn btn-blue btn-xs " >Enabled</button> : <button type="button" className="btn btn-white btn-xs" >Enable</button>
+            }
+            {
+              status === 'enabled' ? <button type="button" className="btn btn-white btn-xs" >Disable</button> : <button type="button" disabled className="btn btn-red btn-xs " >Disabled</button>
+            }
+          </div>
+        </Tooltip>
       )
     }
   },
@@ -94,10 +101,21 @@ const columns: GridColDef<User>[] = [
     headerName: 'Actions',
     sortable: false,
     width: 160,
+    disableColumnMenu: true,
     renderCell: (params) => {
+      const navigate = useNavigate();
       return (
         <div className="actions">
-          <button type="button" className="btn btn-primary" >Update</button>
+          <button
+            type="button"
+            className="btn btn-white btn-icon btn-xs"
+            onClick={() => {
+              navigate(`/users/${params.row.id}/update`);
+            }}
+          >
+            <Icon insideBtn icon="pencil-alt" />
+            <span>Update</span>
+          </button>
         </div>
       )
     }
@@ -108,7 +126,7 @@ function List() {
   return (
     <div className="user-list-page" >
       <DataGrid
-        rows={users as User[]}
+        rows={users as any as User[]}
         columns={columns}
         initialState={{
           pagination: {

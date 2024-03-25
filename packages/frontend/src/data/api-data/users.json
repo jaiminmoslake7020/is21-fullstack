@@ -18,7 +18,7 @@
     "name": "john",
     "role": "inventory-manager",
     "permissions": {
-      "paint-colors": [
+      "paint-colours": [
         "view"
       ]
     },
@@ -30,7 +30,7 @@
     "name": "jane",
     "role": "inventory-manager",
     "permissions": {
-      "paint-colors": [
+      "paint-colours": [
         "view",
         "update"
       ]
@@ -43,7 +43,7 @@
     "name": "bob",
     "role": "painter",
     "permissions": {
-      "paint-colors": [
+      "paint-colours": [
         "view",
         "update"
       ]
@@ -56,7 +56,7 @@
     "name": "karl",
     "role": "painter",
     "permissions": {
-      "paint-colors": [
+      "paint-colours": [
         "view",
         "update"
       ]
