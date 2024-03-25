@@ -40,7 +40,7 @@ function Home(props: HomePropTypes) {
         <h2>Simplified User Login Page</h2>
         <div className="btn-list" >
           {
-            users && users.map((user : any) => (
+            users && users.filter((u) => u.userStatus === 'enabled').map((user : any) => (
               <Tooltip key={user.id} title={`Login as ${capitalize(user.name)}`} >
                 <button
                   type="button"

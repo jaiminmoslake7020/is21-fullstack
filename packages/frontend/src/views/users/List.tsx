@@ -144,18 +144,24 @@ Disable
     disableColumnMenu: true,
     renderCell: (params) => {
       const navigate = useNavigate();
+      const {role} = params.row;
       return (
         <div className="actions">
-          <button
-            type="button"
-            className="btn btn-white btn-icon btn-xs"
-            onClick={() => {
-              navigate(`/users/${params.row.id}/update`);
-            }}
-          >
-            <Icon insideBtn icon="pencil-alt" />
-            <span>Update</span>
-          </button>
+          {
+            role !== 'system-admin'
+              ? (
+                <button
+                  type="button"
+                  className="btn btn-white btn-icon btn-xs"
+                  onClick={() => {
+                    navigate(`/users/${params.row.id}/update`);
+                  }}
+                >
+                  <Icon insideBtn icon="pencil-alt" />
+                  <span>Update</span>
+                </button>
+              ) : 'Not Allowed'
+          }
         </div>
       )
     }

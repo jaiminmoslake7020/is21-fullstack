@@ -49,21 +49,12 @@ export default function Routes() {
         const newRoutes = [];
         if (PaintColours && PaintColours.length >= 0) {
           newRoutes.push({
-            path: users && users.length >= 0 ? '/paint-colors' : '/',
+            path: '/',
             element: (
               <Board />
             ),
           });
-          if (users && users.length >= 0) {
-            newRoutes.push({
-              path: '/paint-colors',
-              element: (
-                <Board />
-              ),
-            });
-          }
-        }
-        if (users && users.length >= 0) {
+        } else if (users && users.length >= 0) {
           newRoutes.push({
             path: '/',
             element: (
