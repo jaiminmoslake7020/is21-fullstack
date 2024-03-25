@@ -49,28 +49,27 @@ export default function Routes() {
         const newRoutes = [];
         if (PaintColours && PaintColours.length >= 0) {
           newRoutes.push({
-            path: '/',
+            path: users && users.length >= 0 ? '/paint-colors' : '/',
             element: (
               <Board />
             ),
           });
-        }
-        if (users && users.length >= 0) {
-          if ((PaintColours && PaintColours.length >= 0)) {
+          if (users && users.length >= 0) {
             newRoutes.push({
-              path: '/',
+              path: '/paint-colors',
               element: (
                 <Board />
               ),
             });
-          } else {
-            newRoutes.push({
-              path: '/',
-              element: (
-                <UserList />
-              ),
-            });
           }
+        }
+        if (users && users.length >= 0) {
+          newRoutes.push({
+            path: '/',
+            element: (
+              <UserList />
+            ),
+          });
           newRoutes.push({
             path: '/users',
             element: (
