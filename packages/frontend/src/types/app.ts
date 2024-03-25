@@ -1,8 +1,10 @@
 export type PaintColour = 'blue' | 'gray' | 'black' | 'white' | 'purple';
 
+export type StockType = 'available' | 'running-low' | 'out-of-stock';
+
 export type Paint = {
   name: PaintColour,
-  stockStatus: 'available' | 'running-low' | 'out-of-stock'
+  stockStatus: StockType
 };
 
 export type Resources = 'paint-colours' | 'users';

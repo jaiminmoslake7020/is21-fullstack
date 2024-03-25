@@ -1,0 +1,10 @@
+.login-page{
+  @apply flex justify-center items-center ;
+  .login-page-container{
+    @apply flex flex-col gap-6 md:max-w-[500px] h-fit;
+    @apply px-4 py-4 rounded border border-yellow-400 ;
+    .btn-list{
+      @apply flex flex-col gap-4 items-center;
+    }
+  }
+}

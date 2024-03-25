@@ -13,7 +13,7 @@ export const userSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.user = action.payload
     },
-    logout: (state:UserSlice, action) => {
+    logout: (state:UserSlice) => {
       // eslint-disable-next-line no-param-reassign
       state.user = null;
     },
