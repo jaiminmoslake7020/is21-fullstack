@@ -3,12 +3,12 @@ import {addNewErrorMsgWithTitle} from '../utils/helpers/feedback';
 import {FailedResponseType, SuccessResponseType} from '../types/base';
 import {PaintColour, User} from '../types/app';
 
-let apiUrl = 'http://192.168.1.100:3000';
+let apiUrl = 'http://54.234.141.210';
 if (window.location.hostname === 'localhost') {
   apiUrl = 'http://localhost:3000'
 }
-if (window.location.hostname === '') {
-  apiUrl = 'http://localhost:3000'
+if (window.location.hostname === '192.168.1.100') {
+  apiUrl = 'http://192.168.1.100:3000'
 }
 
 export const responseJson = (r:any) => {
