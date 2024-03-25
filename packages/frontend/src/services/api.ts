@@ -3,7 +3,7 @@ import {addNewErrorMsgWithTitle} from '../utils/helpers/feedback';
 import {FailedResponseType, SuccessResponseType} from '../types/base';
 import {PaintColour, User} from '../types/app';
 
-let apiUrl = 'http://54.234.141.210';
+let apiUrl = 'http://ec2-54-234-141-210.compute-1.amazonaws.com';
 if (window.location.hostname === 'localhost') {
   apiUrl = 'http://localhost:3000'
 }
